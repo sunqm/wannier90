@@ -32,8 +32,8 @@ TEMP2 = $(F90)
 endif
 
 
-wannier libs w90chk2chk serialobjs: POSTOPTS = $(TEMP1) 
-wannier libs w90chk2chk serialobjs: COMPILER = $(TEMP2)
+wannier libs libwannier.so w90chk2chk serialobjs: POSTOPTS = $(TEMP1) 
+wannier libs libwannier.so w90chk2chk serialobjs: COMPILER = $(TEMP2)
 wannier: ../../wannier90.x 
 w90chk2chk: ../../w90chk2chk.x
 
@@ -76,6 +76,9 @@ libs:     $(LIBRARY)
 
 $(LIBRARY): $(OBJS) $(OBJS2) 
 	$(AR) $(ARFLAGS) $(LIBRARY) $(OBJS2) $(OBJS)
+
+libwannier.so: $(OBJS) $(OBJS2) 
+	$(F90) $(LDOPTS) -o ../../libwannier.so $(OBJS2) $(OBJS)
 
 clean:
 	rm -f *.o *.mod *.MOD *.obj

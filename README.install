@@ -44,6 +44,7 @@
    make post       build the postw90.x executable
    make default    (default) build wannier90.x and postw90.x
    make lib        build the wannier90 library
+   make libwannier.so        build the wannier90 dynamic library
    make w90chk2chk build the w90chk2chk.x utility (see 'Utility' section of
                    the user guide)
    make w90vdw     build the van der Waals code
