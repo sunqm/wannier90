@@ -17,6 +17,9 @@ echo 'LDOPTS = -shared' >> ../make.inc
 cp ../src/Makefile.2 ../src/Makefile.2.copy
 cp Makefile.2 ../src/ 
 
+# Patch src/wannierise.F90 to solve zdotc issue for gfortran+mkl combination
+git apply pyscf/zdotc-patch
+
 
 cd ../
 make clean

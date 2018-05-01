@@ -1,0 +1,47 @@
+diff --git a/src/wannierise.F90 b/src/wannierise.F90
+index 388e55b..8d1f46d 100644
+--- a/src/wannierise.F90
++++ b/src/wannierise.F90
+@@ -674,6 +674,33 @@ contains
+ 
+     end subroutine internal_random_noise
+ 
++    complex(kind=dp) function zdotc(n, zx, incx, zy, incy)
++      COMPLEX(kind=dp) :: zx(*), zy(*)
++      INTEGER :: n, incx, incy
++
++      COMPLEX(kind=dp) :: ztemp
++      INTEGER :: i,ix,iy
++      INTRINSIC :: dconjg
++      ztemp = cmplx(0.0d0,0.0d0)
++      zdotc = cmplx(0.0d0,0.0d0)
++      IF (n.LE.0) RETURN
++      IF (incx.EQ.1 .AND. incy.EQ.1) THEN
++         DO i = 1,n
++            ztemp = ztemp + dconjg(zx(i))*zy(i)
++         END DO
++      ELSE
++         ix = 1
++         iy = 1
++         IF (incx.LT.0) ix = (-n+1)*incx + 1
++         IF (incy.LT.0) iy = (-n+1)*incy + 1
++         DO i = 1,n
++            ztemp = ztemp + dconjg(zx(ix))*zy(iy)
++            ix = ix + incx
++            iy = iy + incy
++         END DO
++      END IF
++      zdotc = ztemp
++    end function zdotc
+ 
+ 
+     !===============================================!
+@@ -689,7 +716,7 @@ contains
+ 
+       implicit none
+ 
+-      complex(kind=dp) :: zdotc
++!      complex(kind=dp) :: zdotc
+ 
+       if (timing_level>1) call io_stopwatch('wann: main: search_direction',1)
+ 
